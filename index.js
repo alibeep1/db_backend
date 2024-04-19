@@ -12,6 +12,8 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors());
+
 app.use(logger("dev"));
 
 app.use(express.json()); // this allows us to take request.body data
@@ -23,7 +25,7 @@ app.use(api);
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Server started on port : ${PORT}`))
 
-app.use(cors());
+
 
 
 // Define Routes

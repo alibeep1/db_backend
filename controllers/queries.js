@@ -68,7 +68,7 @@ queryController.GetQueryOne = async (req, res, next) => {
     const long = parseFloat(longitude)
     console.log(long, ", ", typeof (long))
 
-    const GET_CHANNELS_BY_LONG = `SELECT ci.* 
+    const GET_CHANNELS_BY_LONG = `SELECT ci.*, s.Position_Long as Longitude
     FROM channel_instance as ci
     INNER JOIN satellite as s
     ON ci.Satellite_name = s.Name
@@ -137,7 +137,7 @@ queryController.RegisterUser = async (req, res, next) => {
 queryController.GetQuerySeven = async (req, res, next) => {
     const { region, satellite, vidEncoding, language } = req.query;
 
-    const GET_FILTERED_CHANNELS = `SELECT ci.* 
+    const GET_FILTERED_CHANNELS = `SELECT ci.*, s.Name, s.Region, cil.Language
     FROM channel_instance as ci
         INNER JOIN satellite as s
         ON ci.Satellite_name = s.Name
@@ -155,7 +155,7 @@ queryController.GetQuerySeven = async (req, res, next) => {
     ]);
     return res
         .status(StatusCodes.OK)
-        .json(result)
+        .json({ result })
 
 
 }
@@ -187,7 +187,7 @@ queryController.GetQuerySix = async (req, res, next) => {
 
     return res
         .status(StatusCodes.OK)
-        .json(result)
+        .json({ result })
 }
 
 
@@ -205,7 +205,7 @@ queryController.GetQueryFive = async (req, res, next) => {
 
     return res
         .status(StatusCodes.OK)
-        .json(result)
+        .json({ result })
 
 }
 
@@ -227,12 +227,12 @@ queryController.GetQueryThree = async (req, res, next) => {
 
     return res
         .status(StatusCodes.OK)
-        .json(result)
+        .json({ result })
 }
 
 queryController.GetQueryFour = async (req, res, next) => {
     // console.log("here")
-    const GET_TOP_ROCKETS = `SELECT Launch_Rocket
+    const GET_TOP_ROCKETS = `SELECT Launch_Rocket, COUNT(*) as num_of_satellites
         FROM satellite
         WHERE Launch_Rocket != ''
         GROUP BY 1
@@ -243,7 +243,7 @@ queryController.GetQueryFour = async (req, res, next) => {
 
     return res
         .status(StatusCodes.OK)
-        .json(result);
+        .json({ result });
 }
 
 export default queryController;

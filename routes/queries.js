@@ -51,7 +51,7 @@ router.get(
 )
 
 router.get(
-    '/query_seven/',
+    '/query_seven',
     queryController.GetQuerySeven
 )
 
